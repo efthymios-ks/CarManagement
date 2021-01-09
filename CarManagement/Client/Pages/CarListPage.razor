@@ -1,0 +1,156 @@
+﻿@page "/cars"
+@inject CarManagement.Client.Services.ICarsService CarService
+@inject NavigationManager NavigationManager
+@implements IDisposable
+@using BlazorFluentUI
+
+@* Title *@
+<h3>Cars</h3>
+
+@* Update Car Confirmation *@
+<BFUModal IsOpen="_isDeleteModalOpen"
+          IsBlocking="false"
+          OnDismiss="HideModalDelete">
+    <div class="form-group"
+         style="padding: 15px; align-content: center;">
+        <p>Are you sure you want to delete the car?</p>
+        <BFUPrimaryButton Text="Confirm"
+                          Style="background-color: green"
+                          OnClick="DeleteCarAsync" />
+        <BFUPrimaryButton Text="Cancel"
+                          Style="background-color: red"
+                          OnClick="HideModalDelete" />
+    </div>
+</BFUModal>
+
+@if (CarService.Cars == null)
+{
+    <p>Loading cars...</p>
+    <BFUSpinner />
+}
+else
+{
+    @* Display all Cars*@
+    <table class="table">
+        @* Headers*@
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Production Date</th>
+                <th>Color</th>
+                <th>Km/Lt</th>
+                <th>Cylinders</th>
+                <th>HP</th>
+                <th>Still in production</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @* Values *@
+        <tbody>
+            @foreach (var car in CarService.Cars)
+            {
+                <tr @onclick="() => _selectedCarId = car.Id">
+                    <td>@car.Id</td>
+                    <td>@car.Name</td>
+                    <td>@car.DateProduced.ToShortDateString()</td>
+                    <td>@car.Color</td>
+                    <td>@car.KmPerLiter</td>
+                    <td>@car.Cylinders</td>
+                    <td>@car.HorsePower</td>
+                    <td>@(car.IsStillProduced ? "Yes" : "No")</td>
+                    <td>
+                        <BFUDefaultButton Text="Actions"
+                                          MenuItems="_contextMenuItems"
+                                          OnClick="() => _selectedCarId = car.Id" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    //Fields
+    private IEnumerable<IBFUContextualMenuItem> _contextMenuItems = Enumerable.Empty<IBFUContextualMenuItem>();
+    private bool _isDeleteModalOpen = false;
+    private int _selectedCarId = -1;
+
+    //Methods
+    /// <summary>
+    /// Setup Page controls
+    /// </summary>
+    private void SetupControls()
+    {
+        //Create ICommands for ContextMenu
+        var editCommand = new RelayCommand((parameter) =>
+        {
+            CarEditClicked();
+        });
+        var deleteCommand = new RelayCommand((parameter) =>
+        {
+            CarDeleteClicked();
+        });
+
+        //Create ContextMenu items
+        _contextMenuItems = new IBFUContextualMenuItem[] {
+            new BFUContextualMenuItem()
+            {
+                Key = "Edit",
+                Text ="Edit",
+                Command = editCommand
+            },
+            new BFUContextualMenuItem()
+            {
+                Key = "Delete",
+                Text ="Delete",
+                Command = deleteCommand
+            },
+        };
+    }
+
+    private void CarEditClicked()
+    {
+        NavigationManager.NavigateTo($"/edit/{_selectedCarId}");
+    }
+
+    private void CarDeleteClicked()
+    {
+        Console.WriteLine("CarDeleteClicked");
+        ShowModalDelete();
+    }
+    private void ShowModalDelete()
+    {
+        _isDeleteModalOpen = true;
+        Console.WriteLine($"ShowModalDelete({_isDeleteModalOpen})");
+    }
+    private void HideModalDelete()
+    {
+        _isDeleteModalOpen = false;
+        Console.WriteLine($"HideModalDelete({_isDeleteModalOpen}");
+    }
+    private async Task DeleteCarAsync()
+    {
+        //Hide modal
+        HideModalDelete();
+
+        //Delete car
+        await CarService.DeleteCarAsync(_selectedCarId);
+    }
+
+    //Life-cycle hooks
+    protected async override Task OnInitializedAsync()
+    {
+        await CarService.FetchCarsAsync();
+
+        SetupControls();
+
+        CarService.CarsChanged += StateHasChanged;
+    }
+
+    void IDisposable.Dispose()
+    {
+        CarService.CarsChanged -= StateHasChanged;
+    }
+}

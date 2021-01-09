@@ -1,0 +1,310 @@
+﻿@page "/edit"
+@page "/edit/{CarId}"
+@inject CarManagement.Client.Services.ICarsService CarService
+@implements IDisposable
+@using CarManagement.Shared
+@using BlazorFluentUI
+
+@* Update Car Confirmation *@
+<BFUModal IsOpen="_isUpdateModalOpen"
+          IsBlocking="false"
+          OnDismiss="HideModalUpdate">
+    <div class="form-group"
+         style="padding: 15px; align-content: center;">
+        <p>Are you sure you want to update the car?</p>
+        <BFUPrimaryButton Text="Confirm"
+                          Style="background-color: green"
+                          OnClick="UpdateCarAsync" />
+        <BFUPrimaryButton Text="Cancel"
+                          Style="background-color: red"
+                          OnClick="HideModalUpdate" />
+    </div>
+</BFUModal>
+
+@* Create Car Confirmation *@
+<BFUModal IsOpen="_isCreateModalOpen"
+          IsBlocking="false"
+          OnDismiss="HideModalCreate">
+    <div class="form-group"
+         style="padding: 15px; align-content: center;">
+        <p>Are you sure you want to create a new car?</p>
+        <BFUPrimaryButton Text="Confirm"
+                          Style="background-color: green"
+                          OnClick="CreatCarAsync" />
+        <BFUPrimaryButton Text="Cancel"
+                          Style="background-color: red"
+                          OnClick="HideModalCreate" />
+    </div>
+</BFUModal>
+
+@* Title *@
+<h3>Edit Car</h3>
+
+@* Cars *@
+<div class="form-group">
+    <BFUDropdown Placeholder="Select a car to edit"
+                 ItemsSource=_carOptions
+                 @bind-SelectedOption="_carSelection"
+                 Style="text-align:center" />
+</div>
+
+@* Edit form *@
+<div class="form-group" style="min-width: 300px">
+    <EditForm Model="_car" Context="formContext">
+        @* Validate all *@
+        <DataAnnotationsValidator />
+
+        @* Name *@
+        <div class="form-group">
+            <BFUTextField Label="Name"
+                          @bind-Value="_car.Name" />
+        </div>
+
+        @* DateProduced *@
+        <div class="form-group">
+            <BFUDatePicker Label="Production Date"
+                           @bind-Value="_car.DateProduced"
+                           FormatDate="(value) => value.ToShortDateString()"
+                           InvalidInputErrorMessage="" />
+            <ValidationMessage For="@(() => _car.DateProduced)" />
+        </div>
+
+        @* Color *@
+        <div class="form-group">
+            <BFUDropdown Label="Color"
+                         Placeholder="Select a color"
+                         ItemsSource=_colorOptions
+                         @bind-SelectedOption="_colorSelection" />
+        </div>
+
+        @* KmPerLiter *@
+        <div class="form-group">
+            <BFULabel>Km/Lt</BFULabel>
+            <input id="KmPerLiter"
+                   class="form-control"
+                   style="@_controlStyle"
+                   formnovalidate
+                   @bind-value="_car.KmPerLiter" />
+            <BFUText />
+            <ValidationMessage For="@(() => _car.KmPerLiter)" />
+        </div>
+
+        @* Cylinders *@
+        <div class="form-group">
+            <BFULabel>Cylinders</BFULabel>
+            <input id="kmPerLiter"
+                   type="number"
+                   class="form-control"
+                   style="@_controlStyle"
+                   @bind-value="_car.Cylinders" />
+            <ValidationMessage For="@(() => _car.Cylinders)" />
+        </div>
+
+        @* HorsePower *@
+        <div class="form-group">
+            <BFULabel>Hp</BFULabel>
+            <input id="horsePower"
+                   type="number"
+                   class="form-control"
+                   style="@_controlStyle"
+                   @bind-value="_car.HorsePower" />
+            <ValidationMessage For="@(() => _car.HorsePower)" />
+        </div>
+
+        @* IsStillProduced *@
+        <div class="form-group">
+            <BFUToggle Label="Still in production" @bind-Checked="_car.IsStillProduced" />
+        </div>
+
+        @* Update Car *@
+        <button type="submit"
+                tag="save"
+                class="btn btn-primary"
+                style="background-color: green"
+                @onclick="() => UpdateCarClicked(formContext)">
+            Save
+        </button>
+
+        @* Create Car *@
+        <button type="submit"
+                tag="create"
+                class="btn btn-primary"
+                style="background-color: darkmagenta"
+                @onclick="() => CreateCarClicked(formContext)">
+            Create
+        </button>
+    </EditForm>
+</div>
+
+@code {
+    //Input Parameters
+    [Parameter]
+    public string CarId { get; set; } = "0";
+
+    //Fields
+    /// <summary>
+    /// Underlying bound Car model.
+    /// </summary>
+    private Car _car = new Car();
+    /// <summary>
+    /// Default style for some components
+    /// </summary>
+    private readonly string _controlStyle = @"text-align: center; border-color: darkslategrey; border-radius: 1px; height: 30px";
+    //DropDownOptions
+    private IEnumerable<IBFUDropdownOption> _carOptions = Enumerable.Empty<IBFUDropdownOption>();
+    private IBFUDropdownOption _carSelection
+    {
+        get
+        {
+            CarId = _car.Id.ToString();
+            return _carOptions.FirstOrDefault(o => o.Key == CarId);
+        }
+        set
+        {
+            CarId = value.Key;
+            _car.Id = int.Parse(CarId);
+            LoadCar(_car.Id);
+        }
+    }
+    private IEnumerable<IBFUDropdownOption> _colorOptions = Enumerable.Empty<IBFUDropdownOption>();
+    private IBFUDropdownOption _colorSelection
+    {
+        get { return _colorOptions.FirstOrDefault(o => o.Text == _car.Color); }
+        set { _car.Color = value.Text; }
+    }
+    //MessageBars
+    private bool _isUpdateModalOpen = false;
+    private bool _isCreateModalOpen = false;
+
+    //Event Handlers
+    private void UpdateCarClicked(EditContext FormContext)
+    {
+        //If form is invalid, return
+        if (!FormContext.Validate())
+            return;
+
+        ShowModalUpdate();
+    }
+    private void ShowModalUpdate()
+    {
+        _isUpdateModalOpen = true;
+    }
+    private void HideModalUpdate()
+    {
+        _isUpdateModalOpen = false;
+    }
+    private async Task UpdateCarAsync()
+    {
+        //Hide modal
+        HideModalUpdate();
+
+        //Update Car
+        int carId = int.Parse(CarId);
+        _car.Id = carId;
+        await CarService.UpdateCarAsync(_car.Id, _car);
+
+        //Reload updated Car
+        LoadCar(_car.Id);
+    }
+
+    private void CreateCarClicked(EditContext FormContext)
+    {
+        //If form is invalid, return
+        if (!FormContext.Validate())
+            return;
+
+        ShowModalCreate();
+    }
+    private void ShowModalCreate()
+    {
+        _isCreateModalOpen = true;
+    }
+    private void HideModalCreate()
+    {
+        _isCreateModalOpen = false;
+    }
+    private async Task CreatCarAsync()
+    {
+        //Hide modal
+        HideModalCreate();
+
+        //Insert Car and get new Id
+        _car.Id = -1;
+        _car.Id = await CarService.InsertCarAsync(_car);
+
+        //Select new Car
+        SelectCar(_car.Id);
+    }
+
+    //Methods
+    /// <summary>
+    /// Setup form etc. Mainly for BFU.
+    /// </summary>
+    private void SetupForm()
+    {
+        //DropDown Cars
+        _carOptions = CarService.Cars
+            .Select(c => new BFUDropdownOption()
+            {
+                Key = c.Id.ToString(),
+                Text = c.Name
+            })
+            .Cast<IBFUDropdownOption>();
+
+        //DropDown Colors
+        _colorOptions = Car.AvailableColors
+        .Select(c => new BFUDropdownOption()
+        {
+            Key = c,
+            Text = c,
+        })
+        .Cast<IBFUDropdownOption>();
+
+    }
+
+    /// <summary>
+    /// Load Car data from Context.
+    /// </summary>
+    private void LoadCar(int CarId)
+    {
+        var dbCar = CarService.Cars.FirstOrDefault(c => c.Id == CarId);
+
+        //If car exists, load data
+        if (dbCar != null)
+        {
+            dbCar.CopyTo(_car);
+        }
+    }
+
+    /// <summary>
+    /// Select Car in DropDown.
+    /// </summary>
+    private void SelectCar(int CarId)
+    {
+        _carSelection = _carOptions.FirstOrDefault(o => o.Key == _car.Id.ToString());
+    }
+
+
+    //Life-cycle hooks
+    protected override async Task OnInitializedAsync()
+    {
+        //Convert id
+        int tmp;
+        if (int.TryParse(CarId, out tmp))
+            _car.Id = tmp;
+
+        //Fetch cars
+        await CarService.FetchCarsAsync();
+
+        SetupForm();
+
+        LoadCar(_car.Id);
+
+        CarService.CarsChanged += StateHasChanged;
+    }
+
+    void IDisposable.Dispose()
+    {
+        CarService.CarsChanged -= StateHasChanged;
+    }
+}

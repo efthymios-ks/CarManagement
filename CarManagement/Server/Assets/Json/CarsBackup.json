@@ -1,0 +1,322 @@
+﻿[
+        {
+            "Id": "1",
+            "Name": "Mazda RX4",
+            "DateProduced": "1997-09-26",
+            "Color": "Black",
+            "KmPerLiter": "8.928",
+            "Cylinders": "6",
+            "HorsePower": "110",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "2",
+            "Name": "Mazda RX4 Wag",
+            "DateProduced": "2020-11-10",
+            "Color": "Red",
+            "KmPerLiter": "8.928",
+            "Cylinders": "6",
+            "HorsePower": "110",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "3",
+            "Name": "Datsun 710",
+            "DateProduced": "1983-11-09",
+            "Color": "White",
+            "KmPerLiter": "9.693",
+            "Cylinders": "4",
+            "HorsePower": "93",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "4",
+            "Name": "Hornet 4 Drive",
+            "DateProduced": "1991-08-15",
+            "Color": "Yellow",
+            "KmPerLiter": "9.098",
+            "Cylinders": "6",
+            "HorsePower": "110",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "5",
+            "Name": "Hornet Sportabout",
+            "DateProduced": "1967-05-22",
+            "Color": "Blue",
+            "KmPerLiter": "7.95",
+            "Cylinders": "8",
+            "HorsePower": "175",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "6",
+            "Name": "Valiant",
+            "DateProduced": "2006-06-11",
+            "Color": "Green",
+            "KmPerLiter": "7.695",
+            "Cylinders": "6",
+            "HorsePower": "105",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "7",
+            "Name": "Duster 360",
+            "DateProduced": "1998-07-22",
+            "Color": "Black",
+            "KmPerLiter": "6.08",
+            "Cylinders": "8",
+            "HorsePower": "245",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "8",
+            "Name": "Merc 240D",
+            "DateProduced": "2020-09-19",
+            "Color": "Red",
+            "KmPerLiter": "10.374",
+            "Cylinders": "4",
+            "HorsePower": "62",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "9",
+            "Name": "Merc 230",
+            "DateProduced": "1952-09-24",
+            "Color": "White",
+            "KmPerLiter": "9.693",
+            "Cylinders": "4",
+            "HorsePower": "95",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "10",
+            "Name": "Merc 280",
+            "DateProduced": "2007-10-10",
+            "Color": "Yellow",
+            "KmPerLiter": "8.163",
+            "Cylinders": "6",
+            "HorsePower": "123",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "11",
+            "Name": "Merc 280C",
+            "DateProduced": "2002-07-24",
+            "Color": "Blue",
+            "KmPerLiter": "7.568",
+            "Cylinders": "6",
+            "HorsePower": "123",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "12",
+            "Name": "Merc 450SE",
+            "DateProduced": "1953-08-28",
+            "Color": "Green",
+            "KmPerLiter": "6.972",
+            "Cylinders": "8",
+            "HorsePower": "180",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "13",
+            "Name": "Merc 450SL",
+            "DateProduced": "1994-01-30",
+            "Color": "Black",
+            "KmPerLiter": "7.355",
+            "Cylinders": "8",
+            "HorsePower": "180",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "14",
+            "Name": "Merc 450SLC",
+            "DateProduced": "1993-02-22",
+            "Color": "Red",
+            "KmPerLiter": "6.462",
+            "Cylinders": "8",
+            "HorsePower": "180",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "15",
+            "Name": "Cadillac Fleetwood",
+            "DateProduced": "1982-05-12",
+            "Color": "White",
+            "KmPerLiter": "4.421",
+            "Cylinders": "8",
+            "HorsePower": "205",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "16",
+            "Name": "Lincoln Continental",
+            "DateProduced": "2003-05-01",
+            "Color": "Yellow",
+            "KmPerLiter": "4.421",
+            "Cylinders": "8",
+            "HorsePower": "215",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "17",
+            "Name": "Chrysler Imperial",
+            "DateProduced": "1974-03-16",
+            "Color": "Blue",
+            "KmPerLiter": "6.25",
+            "Cylinders": "8",
+            "HorsePower": "230",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "18",
+            "Name": "Fiat 128",
+            "DateProduced": "1974-10-07",
+            "Color": "Black",
+            "KmPerLiter": "13.775",
+            "Cylinders": "4",
+            "HorsePower": "66",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "19",
+            "Name": "Honda Civic",
+            "DateProduced": "1962-10-18",
+            "Color": "Red",
+            "KmPerLiter": "12.924",
+            "Cylinders": "4",
+            "HorsePower": "52",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "20",
+            "Name": "Toyota Corolla",
+            "DateProduced": "1988-06-23",
+            "Color": "White",
+            "KmPerLiter": "14.412",
+            "Cylinders": "4",
+            "HorsePower": "65",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "21",
+            "Name": "Toyota Corona",
+            "DateProduced": "1972-09-27",
+            "Color": "Yellow",
+            "KmPerLiter": "9.141",
+            "Cylinders": "4",
+            "HorsePower": "97",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "22",
+            "Name": "Dodge Challenger",
+            "DateProduced": "1993-09-09",
+            "Color": "Blue",
+            "KmPerLiter": "6.59",
+            "Cylinders": "8",
+            "HorsePower": "150",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "23",
+            "Name": "AMC Javelin",
+            "DateProduced": "1990-08-09",
+            "Color": "Green",
+            "KmPerLiter": "6.462",
+            "Cylinders": "8",
+            "HorsePower": "150",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "24",
+            "Name": "Camaro Z28",
+            "DateProduced": "2005-02-08",
+            "Color": "Black",
+            "KmPerLiter": "5.654",
+            "Cylinders": "8",
+            "HorsePower": "245",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "25",
+            "Name": "Pontiac Firebird",
+            "DateProduced": "1999-07-04",
+            "Color": "Red",
+            "KmPerLiter": "8.163",
+            "Cylinders": "8",
+            "HorsePower": "175",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "26",
+            "Name": "Fiat X1-9",
+            "DateProduced": "2010-02-10",
+            "Color": "White",
+            "KmPerLiter": "11.606",
+            "Cylinders": "4",
+            "HorsePower": "66",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "27",
+            "Name": "Porsche 914-2",
+            "DateProduced": "1955-09-11",
+            "Color": "Yellow",
+            "KmPerLiter": "11.054",
+            "Cylinders": "4",
+            "HorsePower": "91",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "28",
+            "Name": "Lotus Europa",
+            "DateProduced": "1956-06-10",
+            "Color": "Blue",
+            "KmPerLiter": "12.924",
+            "Cylinders": "4",
+            "HorsePower": "113",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "29",
+            "Name": "Ford Pantera L",
+            "DateProduced": "2004-10-14",
+            "Color": "Green",
+            "KmPerLiter": "6.717",
+            "Cylinders": "8",
+            "HorsePower": "264",
+            "IsStillProduced": false
+        },
+        {
+            "Id": "30",
+            "Name": "Ferrari Dino",
+            "DateProduced": "2010-12-03",
+            "Color": "Black",
+            "KmPerLiter": "8.375",
+            "Cylinders": "6",
+            "HorsePower": "175",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "31",
+            "Name": "Maserati Bora",
+            "DateProduced": "1984-04-22",
+            "Color": "Red",
+            "KmPerLiter": "6.377",
+            "Cylinders": "8",
+            "HorsePower": "335",
+            "IsStillProduced": true
+        },
+        {
+            "Id": "32",
+            "Name": "Volvo 142E",
+            "DateProduced": "1983-07-13",
+            "Color": "White",
+            "KmPerLiter": "9.098",
+            "Cylinders": "4",
+            "HorsePower": "109",
+            "IsStillProduced": false
+        }
+]
